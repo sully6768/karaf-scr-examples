@@ -20,13 +20,12 @@ import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.ConfigurationPolicy;
 import aQute.bnd.annotation.component.Deactivate;
-import aQute.bnd.annotation.component.Modified;
-import aQute.bnd.annotation.component.Reference;
 
 import java.util.Map;
 
 import org.apache.karaf.scr.examples.managed.service.ManagedGreeterService;
-import org.osgi.service.log.LogService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component(name=ManagedGreeterServiceImpl.COMPONENT_NAME, 
            configurationPolicy=ConfigurationPolicy.require,
@@ -36,8 +35,8 @@ public class ManagedGreeterServiceImpl implements ManagedGreeterService {
     public static final String COMPONENT_NAME = "ManagedGreeterService";
 
     public static final String COMPONENT_LABEL = "Managed Greeeter Service";
-
-    private LogService logService;
+    
+    private static final Logger LOG = LoggerFactory.getLogger(ManagedGreeterServiceImpl.class);
 
     private String name;
 
@@ -49,7 +48,7 @@ public class ManagedGreeterServiceImpl implements ManagedGreeterService {
      */
     @Activate
     public void activate(final Map<String, ?> properties) {
-        logService.log(LogService.LOG_INFO, "Activating the " + COMPONENT_LABEL);
+        LOG.info("Activating the " + COMPONENT_LABEL);
         if (properties.containsKey("salutation")) {
             salutation = (String)properties.get("salutation");
         } else {
@@ -68,49 +67,25 @@ public class ManagedGreeterServiceImpl implements ManagedGreeterService {
      */
     @Deactivate
     public void deactivate() {
-        logService.log(LogService.LOG_INFO, "Deactivating the " + COMPONENT_LABEL);
+        LOG.info("Deactivating the " + COMPONENT_LABEL);
     }
     
-    @Modified
-    public void modified(final Map<String, ?> properties) {
-        logService.log(LogService.LOG_INFO, "Modifying the " + COMPONENT_LABEL);
-        if (properties.containsKey("salutation")) {
-            salutation = (String)properties.get("salutation");
-        } else {
-            throw new IllegalArgumentException("The salutation property may not be null or empty: " + salutation);
-        }
-        if (properties.containsKey("name")) {
-            name = (String)properties.get("name");
-        } else {
-            throw new IllegalArgumentException("The salutation property may not be null or empty: " + salutation);
-        }
-    }
+//    @Modified
+//    public void modified(final Map<String, ?> properties) {
+//        LOG.info("Modifying the " + COMPONENT_LABEL);
+//        if (properties.containsKey("salutation")) {
+//            salutation = (String)properties.get("salutation");
+//        } else {
+//            throw new IllegalArgumentException("The salutation property may not be null or empty: " + salutation);
+//        }
+//        if (properties.containsKey("name")) {
+//            name = (String)properties.get("name");
+//        } else {
+//            throw new IllegalArgumentException("The salutation property may not be null or empty: " + salutation);
+//        }
+//    }
 
     public void printGreetings() {
-        logService.log(LogService.LOG_INFO, salutation + " " + name);
+        LOG.info(salutation + " " + name);
     }
-
-    /**
-     * @param salutation the salutation to set
-     */
-    public void setSalutation(String salutation) {
-        this.salutation = salutation;
-    }
-
-    /**
-     * @param name the name to set
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    @Reference
-    protected void setLogService(LogService logService) {
-        this.logService = logService;
-    }
-
-    protected void unsetLogService(LogService logService) {
-        this.logService = logService;
-    }
-
 }

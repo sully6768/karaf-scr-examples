@@ -16,11 +16,10 @@
  */
 package org.apache.karaf.scr.examples.service.impl;
 
-import org.apache.karaf.scr.examples.service.GreeterService;
-import org.osgi.service.log.LogService;
-
 import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
+import org.apache.karaf.scr.examples.service.GreeterService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -36,23 +35,14 @@ import aQute.bnd.annotation.component.Reference;
  */
 @Component
 public class GreeterServiceImpl implements GreeterService {
-
-    private LogService logService;
+    
+    private static final Logger LOG = LoggerFactory.getLogger(GreeterServiceImpl.class);
 
     private String name = System.getProperty("user.name", "Scott ES");
 
     private String salutation = "Hello";
 
     public void printGreetings() {
-        logService.log(LogService.LOG_INFO, salutation + " " + name);
-    }
-
-    @Reference
-    protected void setLogService(LogService logService) {
-        this.logService = logService;
-    }
-
-    protected void unsetLogService(LogService logService) {
-        this.logService = logService;
+        LOG.info(salutation + " " + name);
     }
 }

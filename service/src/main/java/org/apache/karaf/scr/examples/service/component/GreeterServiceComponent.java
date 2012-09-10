@@ -16,13 +16,13 @@
  */
 package org.apache.karaf.scr.examples.service.component;
 
-import org.apache.karaf.scr.examples.service.GreeterService;
-import org.osgi.service.log.LogService;
-
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
+import org.apache.karaf.scr.examples.service.GreeterService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component(name = GreeterServiceComponent.COMPONENT_NAME)
 public class GreeterServiceComponent {
@@ -30,8 +30,8 @@ public class GreeterServiceComponent {
     public static final String COMPONENT_NAME = "GreeterServiceComponent";
 
     public static final String COMPONENT_LABEL = "GreeterService Component";
-
-    private LogService logService;
+    
+    private static final Logger LOG = LoggerFactory.getLogger(GreeterServiceComponent.class);
 
     private GreeterService greeterService;
 
@@ -41,7 +41,7 @@ public class GreeterServiceComponent {
      */
     @Activate
     public void activate() {
-        logService.log(LogService.LOG_INFO, "Activating the " + COMPONENT_LABEL);
+        LOG.info("Activating the " + COMPONENT_LABEL);
         greeterService.printGreetings();
     }
 
@@ -51,7 +51,7 @@ public class GreeterServiceComponent {
      */
     @Deactivate
     public void deactivate() {
-        logService.log(LogService.LOG_INFO, "Deactivating the " + COMPONENT_LABEL);
+        LOG.info("Deactivating the " + COMPONENT_LABEL);
     }
 
     @Reference
@@ -62,14 +62,4 @@ public class GreeterServiceComponent {
     public void unsetGreeterService(final GreeterService greeterService) {
         this.greeterService = null;
     }
-
-    @Reference
-    protected void setLogService(LogService logService) {
-        this.logService = logService;
-    }
-
-    protected void unsetLogService(LogService logService) {
-        this.logService = null;
-    }
-
 }

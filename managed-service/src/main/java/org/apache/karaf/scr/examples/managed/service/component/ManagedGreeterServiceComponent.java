@@ -21,7 +21,9 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
 import org.apache.karaf.scr.examples.managed.service.ManagedGreeterService;
-import org.osgi.service.log.LogService;
+import org.apache.karaf.scr.examples.managed.service.impl.ManagedGreeterServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component(name = ManagedGreeterServiceComponent.COMPONENT_NAME)
 public class ManagedGreeterServiceComponent {
@@ -29,8 +31,8 @@ public class ManagedGreeterServiceComponent {
     public static final String COMPONENT_NAME = "ManagedGreeterServiceComponent";
 
     public static final String COMPONENT_LABEL = "Managed GreeterService Component";
-
-    private LogService logService;
+    
+    private static final Logger LOG = LoggerFactory.getLogger(ManagedGreeterServiceImpl.class);
 
     private ManagedGreeterService greeterService;
 
@@ -40,7 +42,7 @@ public class ManagedGreeterServiceComponent {
      */
     @Activate
     public void activate() {
-        logService.log(LogService.LOG_INFO, "Activating the " + COMPONENT_LABEL);
+        LOG.info("Activating the " + COMPONENT_LABEL);
         greeterService.printGreetings();
     }
 
@@ -50,7 +52,7 @@ public class ManagedGreeterServiceComponent {
      */
     @Deactivate
     public void deactivate() {
-        logService.log(LogService.LOG_INFO, "Deactivating the " + COMPONENT_LABEL);
+        LOG.info("Deactivating the " + COMPONENT_LABEL);
     }
 
     @Reference(target="(greeter.service=managed)")
@@ -61,14 +63,4 @@ public class ManagedGreeterServiceComponent {
     public void unsetGreeterService(final ManagedGreeterService greeterService) {
         this.greeterService = null;
     }
-
-    @Reference
-    protected void setLogService(LogService logService) {
-        this.logService = logService;
-    }
-
-    protected void unsetLogService(LogService logService) {
-        this.logService = null;
-    }
-
 }
