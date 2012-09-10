@@ -24,14 +24,14 @@ import org.apache.karaf.scr.examples.service.GreeterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(name = GreeterServiceComponent.COMPONENT_NAME)
-public class GreeterServiceComponent {
+@Component(name = GreeterComponent.COMPONENT_NAME)
+public class GreeterComponent {
 
-    public static final String COMPONENT_NAME = "GreeterServiceComponent";
+    public static final String COMPONENT_NAME = "GreeterComponent";
 
     public static final String COMPONENT_LABEL = "GreeterService Component";
     
-    private static final Logger LOG = LoggerFactory.getLogger(GreeterServiceComponent.class);
+    private static final Logger LOG = LoggerFactory.getLogger(GreeterComponent.class);
 
     private GreeterService greeterService;
 
