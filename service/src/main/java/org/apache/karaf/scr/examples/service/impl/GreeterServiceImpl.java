@@ -55,5 +55,4 @@ public class GreeterServiceImpl implements GreeterService {
     protected void unsetLogService(LogService logService) {
         this.logService = logService;
     }
-
 }

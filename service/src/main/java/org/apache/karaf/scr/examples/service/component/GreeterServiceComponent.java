@@ -55,11 +55,11 @@ public class GreeterServiceComponent {
     }
 
     @Reference
-    public void setExampleService(final GreeterService greeterService) {
+    public void setGreeterService(final GreeterService greeterService) {
         this.greeterService = greeterService;
     }
 
-    public void unsetExampleService(final GreeterService greeterService) {
+    public void unsetGreeterService(final GreeterService greeterService) {
         this.greeterService = null;
     }
 
