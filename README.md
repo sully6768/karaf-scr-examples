@@ -1,6 +1,8 @@
 Karaf SCR Examples
 ---------------------------
 
+These Examples are used for my SCR Components with Karaf Articles.
+
 I use the Karaf SCR Commands for all my OSGi related examples.  OSGi Declarative Service or the Service Component Runtime (SCR) is a very lightweight and easy to use framework that is suitable for dependency injection.  It has been available as part of the OSGi Specification since 4.0 making it well baked and stable.  While it uses XML for the wiring at runtime the XMl can actually be generated at build time using either the BND or Felix Annotations.  They are both solid and stable implementations but have some significant differences:
 
 Felix SCR Annotations
@@ -23,19 +25,58 @@ Apache Felix Maven SCR - http://felix.apache.org/site/apache-felix-maven-scr-plu
 BND Annotation - http://www.aqute.biz/Bnd/Components
 
 
+To get started install Karaf 2.2.9.  It can be found here:
 
+https://repository.apache.org/content/groups/public/org/apache/karaf/apache-karaf/2.2.9/
 
-First lets install the SCR Feature that will install commands 
+Hint:
+I live by tail so to make my life easier I remove the ${karaf.data}/ from the etc/org.ops4j.pax.logging.cfg appender directories so I can just delete the data dir without restarting tail.
+
+To get started with Karaf SCR, first install the SCR Feature with the SCR Commands.  This will allow you to manipulate the installed examples at runtime.
+
+Navigate to where you installed Karaf 2.2.9 and open the etc/org.ops4j.pax.url.mvn.cfg file.  This is where the configuration for Maven repository lookups are kept.  Navigate to the bottom of the file and add the following repository:
+
+http://sully6768.github.com/repos/releases/
+
+This is where Karaf will find the SCR Command binaries for 2.2.x.
+
+Now start Karaf:
+
+First ./bin/karaf debug
+
+Once it is up and running we can add the SCR Feature:
+
 features:addurl mvn:org.apache.karaf.scr/org.apache.karaf.scr.feature/2.2.9/xml/features
 features:install scr
 
-INFO  | Activating the Apache Karaf SCR Details Command
-INFO  | Activating the Apache Karaf SCR Deactivate Command
+If you execute list -t 0 your output should end with the following four lines:
+
+<pre  style="font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;padding:0px;color:#000000;text-align:left;line-height:20px;"><code style="color:#000000;word-wrap:normal;">karaf@root&gt; ll  
+ START LEVEL 100 , List Threshold: 50  
+   ID  State     Blueprint   Level Name  
+ {snip...}  
+ [ 51] [Active   ] [      ] [  80] Apache Felix Metatype Service (1.0.4)  
+ [ 52] [Active   ] [      ] [  80] Apache Felix Declarative Services (1.6.0)  
+ [ 53] [Active   ] [      ] [  80] Apache Karaf :: SCR :: Shell Commands (2.2.9)  
+ [ 54] [Active   ] [      ] [  80] Apache Karaf :: SCR :: Management MBeans (2.2.9)  
+ karaf@root&gt;</code></pre>
+
+<pre style="font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;padding:0px;color:#000000;text-align:left;line-height:20px;"><code style="color:#000000;word-wrap:normal;">./bin/karaf debug</code></pre>
+
+
+Also, reviewing the karaf.log file you will see the floowing log output if you have it set to INFO (I have trimmed the log output to only reflect the import parts):<br />
+<pre style="font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;padding:0px;color:#000000;text-align:left;line-height:20px;"><code style="color:#000000;word-wrap:normal;">INFO  | Activating the Apache Karaf SCR Deactivate Command
 INFO  | Activating the Apache Karaf SCR Activate Command
 INFO  | Activating the Apache Karaf SCR List Command
-INFO  | Activating the Apache Karaf SCR Service MBean
+INFO  | Activating the Apache Karaf SCR Details Command
+INFO  | Activating the Apache Karaf SCR Service MBean</code></pre>
+<br />
 
-scr:activate      scr:deactivate    scr:details       scr:list
+The commands we have installed installed are
+scr:activate
+scr:deactivate
+scr:details
+scr:list
 
 
 karaf@root> scr:list 
@@ -124,3 +165,10 @@ config:edit MetaTypeManagedComponent
 config:propset salutation Hello
 config:propset name Marla
 config:update
+
+
+
+<pre  style="font-family:arial;font-size:12px;border:1px dashed #CCCCCC;width:99%;height:auto;overflow:auto;background:#f0f0f0;padding:0px;color:#000000;text-align:left;line-height:20px;">
+<code style="color:#000000;word-wrap:normal;">
+</code>
+</pre>
