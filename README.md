@@ -1,32 +1,29 @@
 Karaf SCR Examples
 ---------------------------
 
-I use the Karaf SCR Commands for all my OSGi related examples.  OSGi Declarative Service or the Service Component Runtime (SCR) is a very lightweight and easy to use framework that is suitable for dependency injection.  It has been available as part of the OSGi Specification since 4.0 and is well baked and stable.  While it uses XML for the wiring at runtime the XMl can actually be generated at build time using either the BND or Felix Annotations.  They are both solid and stable implementations but have some significant differences:
+I use the Karaf SCR Commands for all my OSGi related examples.  OSGi Declarative Service or the Service Component Runtime (SCR) is a very lightweight and easy to use framework that is suitable for dependency injection.  It has been available as part of the OSGi Specification since 4.0 making it well baked and stable.  While it uses XML for the wiring at runtime the XMl can actually be generated at build time using either the BND or Felix Annotations.  They are both solid and stable implementations but have some significant differences:
 
 Felix SCR Annotations
 
 * Inheritance Support for abstract components
-* Generated bind/unbind methods  
+* Generated bind/unbind methods (less code by you, more code by manipulation)
 
 BND/OSGi DS Annotations
 * Boilerplate for the new OSGi DS Annotations in the 4.3 Release
 * Fully supported by the Maven Bundle Plugin
+* No other library dependencies (Felix requires the annotation lib be installed)
 
-The BND/OSGi DS Annotations offer a lightweight SCR XML generation at build time.
+I personally prefer the BND/OSGi annotations.  They are lighter weight with regards to development and deployment.  I can use my Maven Bundle Plugin stand alone and not have to introduce a new plugin and configuration.  I also don't have to install the Felix Annotations into my container.  Finally, my source no longer matches the generated binary.
 
-The biggest benefit between BND Annotations are being integrated into the OSGi Specification and are supported by the Maven Bundle Plugin.  You simply have to add the <Service-Component>*</Service-Component> element to your maven-bundle-plugin configuration and it will pick up any annotated component.  It also has support for OSGi Metatype if the BND Metatype Annotations are found.  With all that goodness the BND annotations have a major drawback in that it doesn't support inheritance.
+My concerns above are minimal with the exception of the generated code.  Even if you use the Felix annotations I would avoid using this feature.  Remember that with SCR you are dynamically obtaining reference to your services and that these are concrete references and not proxies (another big plus of SCR over other DI frameworks).  You have to ensure thread safety on these references and the use of ReadWriteLocks is far superior to syncronization blocks.  More on that later though. 
 
-The Felix Annotations have some good benefits as well.  They allow for more configurations over code by require a separate Mavan Plugin which is not a major concern
-
-I prefer the BND Annotations for two reasons.  First they are supported by the Maven Bundle Plugin while the Felix Annotations 
+The one thing I would love to have though is inheritance.  That is still a big negative but it is being discussed over at the OSGi group.
 
 Apache Felix Maven SCR - http://felix.apache.org/site/apache-felix-maven-scr-plugin.html
 BND Annotation - http://www.aqute.biz/Bnd/Components
 
-Therefore I felt it was probably a good idea to include a primer on SCRThere are lots of examples around the Internet on how to implement .   
-This guide is more of a 
 
-I am a big fan of SCR due to its simplicity and lightweight nature.  
+
 
 First lets install the SCR Feature that will install commands 
 features:addurl mvn:org.apache.karaf.scr/org.apache.karaf.scr.feature/2.2.9/xml/features

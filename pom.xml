@@ -56,11 +56,11 @@
     <distributionManagement>
         <repository>
             <id>release-repo</id>
-            <url>https://sully6768.github.com/repos/releases</url>
+            <url>http://sully6768.github.com/repos/releases</url>
         </repository>
         <snapshotRepository>
             <id>snapshot-repo</id>
-            <url>https://sully6768.github.com/repos/snapshots</url>
+            <url>http://sully6768.github.com/repos/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
