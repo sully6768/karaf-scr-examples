@@ -100,35 +100,35 @@ public class ManagedGreeterServiceImpl implements ManagedGreeterService {
         LOG.info("Deactivating the " + COMPONENT_LABEL);
     }
 
-    /**
-     * Called when the configuration associated with this component has been
-     * updated.
-     */
-    @Modified
-    public void modified(final Map<String, ?> properties) {
-        LOG.info("Modifying the " + COMPONENT_LABEL);
-
-        // This time we really only need to make sure if it changed it isn't
-        // empty
-        if (properties.containsKey("salutation") && !properties.get("salutation").equals("")) {
-            try {
-                lock.writeLock().lock();
-                worker.setSalutation((String)properties.get("salutation"));
-            } finally {
-                lock.writeLock().unlock();
-            }
-        }
-
-        // Same for name
-        if (properties.containsKey("name") && !properties.get("name").equals("")) {
-            try {
-                lock.writeLock().lock();
-                worker.setName((String)properties.get("name"));
-            } finally {
-                lock.writeLock().unlock();
-            }
-        }
-    }
+//    /**
+//     * Called when the configuration associated with this component has been
+//     * updated.
+//     */
+//    @Modified
+//    public void modified(final Map<String, ?> properties) {
+//        LOG.info("Modifying the " + COMPONENT_LABEL);
+//
+//        // This time we really only need to make sure if it changed it isn't
+//        // empty
+//        if (properties.containsKey("salutation") && !properties.get("salutation").equals("")) {
+//            try {
+//                lock.writeLock().lock();
+//                worker.setSalutation((String)properties.get("salutation"));
+//            } finally {
+//                lock.writeLock().unlock();
+//            }
+//        }
+//
+//        // Same for name
+//        if (properties.containsKey("name") && !properties.get("name").equals("")) {
+//            try {
+//                lock.writeLock().lock();
+//                worker.setName((String)properties.get("name"));
+//            } finally {
+//                lock.writeLock().unlock();
+//            }
+//        }
+//    }
 
     public void startGreeter() {
         try {
