@@ -16,25 +16,28 @@
  */
 package org.apache.karaf.scr.examples.managed.service.component;
 
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 import aQute.bnd.annotation.component.Reference;
 import org.apache.karaf.scr.examples.managed.service.ManagedGreeterService;
-import org.apache.karaf.scr.examples.managed.service.impl.ManagedGreeterServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(name = ManagedGreeterServiceComponent.COMPONENT_NAME)
-public class ManagedGreeterServiceComponent {
+@Component(name = ManagedGreeterComponent.COMPONENT_NAME)
+public class ManagedGreeterComponent {
 
-    public static final String COMPONENT_NAME = "ManagedGreeterServiceComponent";
+    public static final String COMPONENT_NAME = "ManagedGreeterComponent";
 
-    public static final String COMPONENT_LABEL = "Managed GreeterService Component";
-    
-    private static final Logger LOG = LoggerFactory.getLogger(ManagedGreeterServiceImpl.class);
+    public static final String COMPONENT_LABEL = "Managed Greeter Component";
+
+    private static final Logger LOG = LoggerFactory.getLogger(ManagedGreeterComponent.class);
 
     private ManagedGreeterService greeterService;
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
 
     /**
      * Called when all of the SCR Components required dependencies have been
@@ -43,7 +46,14 @@ public class ManagedGreeterServiceComponent {
     @Activate
     public void activate() {
         LOG.info("Activating the " + COMPONENT_LABEL);
-        greeterService.printGreetings();
+        try {
+            lock.readLock().lock();
+            if (greeterService != null) {
+                greeterService.startGreeter();
+            }
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
     /**
@@ -53,14 +63,32 @@ public class ManagedGreeterServiceComponent {
     @Deactivate
     public void deactivate() {
         LOG.info("Deactivating the " + COMPONENT_LABEL);
+        try {
+            lock.readLock().lock();
+            if (greeterService != null) {
+                greeterService.stopGreeter();
+            }
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 
-    @Reference(target="(greeter.service=managed)")
-    public void setExampleService(final ManagedGreeterService greeterService) {
-        this.greeterService = greeterService;
+    @Reference
+    public void setGreeterService(final ManagedGreeterService greeterService) {
+        try {
+            lock.writeLock().lock();
+            this.greeterService = greeterService;
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
     public void unsetGreeterService(final ManagedGreeterService greeterService) {
-        this.greeterService = null;
+        try {
+            lock.writeLock().lock();
+            this.greeterService = null;
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 }

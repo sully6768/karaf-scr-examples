@@ -18,11 +18,8 @@ package org.apache.karaf.scr.examples.managed.service;
 
 /**
  * The SCR Service interface we are going to publish
- *
- * @author sully6768
  */
 public interface ManagedGreeterService {
-
-    void printGreetings();
-
+    void startGreeter();
+    void stopGreeter();
 }

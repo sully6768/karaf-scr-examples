@@ -24,7 +24,7 @@ import org.apache.karaf.scr.examples.service.GreeterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(name = GreeterComponent.COMPONENT_NAME, enabled=false)
+@Component(name = GreeterComponent.COMPONENT_NAME)
 public class GreeterComponent {
 
     public static final String COMPONENT_NAME = "GreeterComponent";
