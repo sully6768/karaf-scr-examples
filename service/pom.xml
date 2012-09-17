@@ -35,10 +35,6 @@
     <name>Apache Karaf :: SCR :: Examples :: Basic Service</name>
     <description>Building SCR Components using the BND Annotation Libraries</description>
 
-    <properties>
-        <appendedResourcesDirectory>${basedir}/../../../etc/appended-resources</appendedResourcesDirectory>
-    </properties>
-
     <dependencies>
         <!-- 
             Contains the SCR Annotations

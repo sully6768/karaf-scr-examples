@@ -42,15 +42,12 @@
         <felix.scr.version>1.6.0</felix.scr.version>
         <bndlib.version>1.50.0</bndlib.version>
         <felix.metatype.version>1.0.4</felix.metatype.version>
-        <appendedResourcesDirectory>${basedir}/../etc/appended-resources</appendedResourcesDirectory>
     </properties>
 
     <modules>
         <module>service</module>
         <module>managed-service</module>
-<!--         <module>managed-service-factory</module> -->
-<!--         <module>managed-service-factory-metatype</module> -->
-<!--         <module>component-factory</module> -->
+        <module>component-factory</module>
     </modules>
     
     

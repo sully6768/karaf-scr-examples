@@ -30,12 +30,16 @@
         <version>2.2.9</version>
     </parent>
 
-    <artifactId>org.apache.karaf.scr.examples.managed.service</artifactId>
+    <artifactId>org.apache.karaf.scr.examples.component.factories</artifactId>
     <packaging>bundle</packaging>
-    <name>Apache Karaf :: SCR :: Examples :: Managed Services</name>
+    <name>Apache Karaf :: SCR :: Examples :: Component Factories</name>
     <description>Building SCR Components using the BND Annotation Libraries</description>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.scr</artifactId>
+        </dependency>
         <dependency>
             <groupId>biz.aQute</groupId>
             <artifactId>bndlib</artifactId>
