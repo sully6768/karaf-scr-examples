@@ -40,12 +40,12 @@ import org.slf4j.LoggerFactory;
  */
 // The ConfigAdmin PID of our component
 @Component(name = GreeterServiceComponentFactoryImpl.COMPONENT_NAME,
-// The policy that makes our configuration a required dependency
+// The Factory ID of the Component Factory
 factory = "greeter.factory.provider")
 public class GreeterServiceComponentFactoryImpl implements GreeterServiceComponentFactory {
 
     public static final String COMPONENT_NAME = "GreeterServiceComponentFactory";
-    public static final String COMPONENT_LABEL = "Managed Greeeter Service";
+    public static final String COMPONENT_LABEL = "Greeter Service Component Factory";
 
     private static final Logger LOG = LoggerFactory.getLogger(GreeterServiceComponentFactoryImpl.class);
 

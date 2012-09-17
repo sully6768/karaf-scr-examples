@@ -36,7 +36,7 @@ public class GreeterServiceFactoryManager {
 
     public static final String COMPONENT_NAME = "GreeterServiceFactoryManager";
 
-    public static final String COMPONENT_LABEL = "Managed Greeter Component";
+    public static final String COMPONENT_LABEL = "Greeter Service Factory Manager";
 
     private static final Logger LOG = LoggerFactory.getLogger(GreeterServiceFactoryManager.class);
 
